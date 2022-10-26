@@ -139,11 +139,13 @@ dd
 #                 dhcp_on=True \
 #                 primary_rack="${RACK_PRIMARY_ID_0}"
 
-RACK_FABRIC_ID_ADDRESS="192.168.0.0/16"
-
-RACK_FABRIC_ID=$(sudo maas falinux subnet read "$RACK_FABRIC_ID_ADDRESS" | jq -r -M ".vlan.fabric_id") 
+RACK_FABRIC_ID=$(sudo maas falinux subnet read "192.168.0.0/16" | jq -r -M ".vlan.fabric_id") 
 RACK_VID=$(sudo maas falinux subnet read "192.168.0.0/16" | jq -r -M ".vlan.vid")
 RACK_PRIMARY_ID=$(sudo maas falinux rack-controllers read | jq -r -M ".[].system_id") 
+
+echo "RACK_FABRIC_ID=${RACK_FABRIC_ID}"
+echo "RACK_VID=${RACK_VID0}"
+echo "RACK_PRIMARY_ID=${RACK_PRIMARY_ID}"
 
 sudo maas falinux subnet update 192.168.0.0/16 gateway_ip=192.168.10.1 
 sudo maas falinux ipranges create type=dynamic start_ip=192.168.10.100 end_ip=192.168.10.200 
@@ -153,21 +155,21 @@ sudo maas falinux vlan update \
                  dhcp_on=True \
                  primary_rack="${RACK_PRIMARY_ID}"
 
-RACK_FABRIC_ID_0=$(sudo maas falinux subnet read "192.168.0.0/16" | jq -r -M ".vlan.fabric_id") 
-RACK_VID_0=$(sudo maas falinux subnet read "192.168.0.0/16" | jq -r -M ".vlan.vid")
-RACK_PRIMARY_ID_0=$(sudo maas falinux rack-controllers read | jq -r -M ".[].system_id") 
-
-echo "RACK_FABRIC_ID=${RACK_FABRIC_ID_0}"
-echo "RACK_VID=${RACK_VID_0}"
-echo "RACK_PRIMARY_ID=${RACK_PRIMARY_ID_0}"
-
-sudo maas falinux subnet update 192.168.101.0/24 gateway_ip=192.168.20.1
-sudo maas falinux ipranges create type=dynamic start_ip=192.168.20.100 end_ip=192.168.20.200
-sudo maas falinux vlan update \
-                 "${RACK_FABRIC_ID_0}" \
-                 "${RACK_VID_0}" \
-                 dhcp_on=True \
-                 primary_rack="${RACK_PRIMARY_ID_0}"
+#RACK_FABRIC_ID_0=$(sudo maas falinux subnet read "192.168.0.0/16" | jq -r -M ".vlan.fabric_id") 
+#RACK_VID_0=$(sudo maas falinux subnet read "192.168.0.0/16" | jq -r -M ".vlan.vid")
+#RACK_PRIMARY_ID_0=$(sudo maas falinux rack-controllers read | jq -r -M ".[].system_id") 
+#
+#echo "RACK_FABRIC_ID=${RACK_FABRIC_ID_0}"
+#echo "RACK_VID=${RACK_VID_0}"
+#echo "RACK_PRIMARY_ID=${RACK_PRIMARY_ID_0}"
+#
+#sudo maas falinux subnet update 192.168.101.0/24 gateway_ip=192.168.20.1
+#sudo maas falinux ipranges create type=dynamic start_ip=192.168.20.100 end_ip=192.168.20.200
+#sudo maas falinux vlan update \
+#                 "${RACK_FABRIC_ID_0}" \
+#                 "${RACK_VID_0}" \
+#                 dhcp_on=True \
+#                 primary_rack="${RACK_PRIMARY_ID_0}"
 #--------------------------------------------------------------------------------
 # https://maas.io/docs/how-to-use-the-maas-cli
 
