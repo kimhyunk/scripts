@@ -148,8 +148,8 @@ sudo maas falinux vlan update \
                  dhcp_on=True \
                  primary_rack="${RACK_PRIMARY_ID}"
 
-RACK_FABRIC_ID_0=$(sudo maas falinux subnet read "192.168.101.0/16" | jq -r -M ".vlan.fabric_id") 
-RACK_VID_0=$(sudo maas falinux subnet read "192.168.101.0/16" | jq -r -M ".vlan.vid")
+RACK_FABRIC_ID_0=$(sudo maas falinux subnet read "192.168.101.0/24" | jq -r -M ".vlan.fabric_id") 
+RACK_VID_0=$(sudo maas falinux subnet read "192.168.101.0/24" | jq -r -M ".vlan.vid")
 RACK_PRIMARY_ID_0=$(sudo maas falinux rack-controllers read | jq -r -M ".[].system_id") 
 
 echo "RACK_FABRIC_ID=${RACK_FABRIC_ID_0}"
@@ -173,7 +173,7 @@ sudo maas falinux maas set-config name=upstream_dns value="8.8.8.8"
 
 #--------------------------------------------------------------------------------
 
- sudo apt install haproxy
+# sudo apt install haproxy
 
 msg "#8-${GREEN}Machine ssh public key${NOFORMAT}"
 cat ~/.ssh/id_rsa.pub
