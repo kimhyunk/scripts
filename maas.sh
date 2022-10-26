@@ -87,6 +87,9 @@ sudo maas login falinux http://localhost:5240/MAAS/api/2.0/
 
 sudo maas falinux --help
 
+
+sudo maas falinux boot-resources read | jq '.[] | select(.url | contains("images.maas.io.ephemeral-v3")) | .id'
+
 #--------------------------------------------------------------------------------
 msg "#5-${GREEN}MAAS generic setting${NOFORMAT}"
 
@@ -101,7 +104,7 @@ dd
 
 #--------------------------------------------------------------------------------
 # setting 10.10.0.0/16
-#RACK_FABRIC_ID=$(sudo maas falinux subnet read "10.10.0.0/16" | jq -r -M ".vlan.fabric_id") 
+#RACK_FABRIC_ID=$(sudo maas falinux subnet read "10.10.0.0/16" | jq -r kk-M ".vlan.fabric_id") 
 #RACK_VID=$(sudo maas falinux subnet read "10.10.0.0/16" | jq -r -M ".vlan.vid")
 #RACK_PRIMARY_ID=$(sudo maas falinux rack-controllers read | jq -r -M ".[].system_id") 
 #
@@ -148,8 +151,8 @@ sudo maas falinux vlan update \
                  dhcp_on=True \
                  primary_rack="${RACK_PRIMARY_ID}"
 
-RACK_FABRIC_ID_0=$(sudo maas falinux subnet read "192.168.101.0/24" | jq -r -M ".vlan.fabric_id") 
-RACK_VID_0=$(sudo maas falinux subnet read "192.168.101.0/24" | jq -r -M ".vlan.vid")
+RACK_FABRIC_ID_0=$(sudo maas falinux subnet read "192.168.0.0/16" | jq -r -M ".vlan.fabric_id") 
+RACK_VID_0=$(sudo maas falinux subnet read "192.168.0.0/16" | jq -r -M ".vlan.vid")
 RACK_PRIMARY_ID_0=$(sudo maas falinux rack-controllers read | jq -r -M ".[].system_id") 
 
 echo "RACK_FABRIC_ID=${RACK_FABRIC_ID_0}"
