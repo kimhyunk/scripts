@@ -60,7 +60,7 @@ msg "#3-${GREEN}MAAS DATABASE init${NOFORMAT} .. "
 
 export MAAS_DBUSER="maas"
 export MAAS_DBNAME="maas-db"
-export MAAS_DBPASS="2001May09"
+export MAAS_DBPASS="qwer1234"
 #echo -n "Password MAAS_DBPASS: "
 #read -rs MAAS_DBPASS
 #echo -n "Again MAAS_DBPASS: "
