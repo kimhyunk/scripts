@@ -96,6 +96,8 @@ sudo maas falinux maas set-config name=kernel_opts value='console=tty0 console=t
 sudo maas falinux maas set-config name=completed_intro value=true
 
 msg "#6-${GREEN}MAAS dhcp setting${NOFORMAT}"
+dd
+# input user string 
 
 #--------------------------------------------------------------------------------
 # setting 10.10.0.0/16
@@ -146,8 +148,8 @@ sudo maas falinux vlan update \
                  dhcp_on=True \
                  primary_rack="${RACK_PRIMARY_ID}"
 
-RACK_FABRIC_ID_0=$(sudo maas falinux subnet read "10.20.0.0/16" | jq -r -M ".vlan.fabric_id") 
-RACK_VID_0=$(sudo maas falinux subnet read "10.20.0.0/16" | jq -r -M ".vlan.vid")
+RACK_FABRIC_ID_0=$(sudo maas falinux subnet read "192.168.101.0/16" | jq -r -M ".vlan.fabric_id") 
+RACK_VID_0=$(sudo maas falinux subnet read "192.168.101.0/16" | jq -r -M ".vlan.vid")
 RACK_PRIMARY_ID_0=$(sudo maas falinux rack-controllers read | jq -r -M ".[].system_id") 
 
 echo "RACK_FABRIC_ID=${RACK_FABRIC_ID_0}"
