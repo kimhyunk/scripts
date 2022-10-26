@@ -80,7 +80,7 @@ echo | sudo maas init region+rack --database-uri "postgres://${MAAS_DBUSER}:${MA
 #--------------------------------------------------------------------------------
 msg "#4-${GREEN}Init MAAS${NOFORMAT} .. "
 
-sudo maas createadmin --username falinux --password 2001May09 --email khkraining@falinux.com
+sudo maas createadmin --username falinux --password qwer1234 --email khkraining@falinux.com
 
 sudo maas apikey --username falinux
 sudo maas login falinux http://localhost:5240/MAAS/api/2.0/
@@ -146,6 +146,21 @@ sudo maas falinux vlan update \
                  dhcp_on=True \
                  primary_rack="${RACK_PRIMARY_ID}"
 
+RACK_FABRIC_ID_0=$(sudo maas falinux subnet read "10.20.0.0/16" | jq -r -M ".vlan.fabric_id") 
+RACK_VID_0=$(sudo maas falinux subnet read "10.20.0.0/16" | jq -r -M ".vlan.vid")
+RACK_PRIMARY_ID_0=$(sudo maas falinux rack-controllers read | jq -r -M ".[].system_id") 
+
+echo "RACK_FABRIC_ID=${RACK_FABRIC_ID_0}"
+echo "RACK_VID=${RACK_VID_0}"
+echo "RACK_PRIMARY_ID=${RACK_PRIMARY_ID_0}"
+
+sudo maas falinux subnet update 192.168.101.0/24 gateway_ip=192.168.101.1
+sudo maas falinux ipranges create type=dynamic start_ip=192.168.101.100 end_ip=192.168.101.200
+sudo maas falinux vlan update \
+                 "${RACK_FABRIC_ID_0}" \
+                 "${RACK_VID_0}" \
+                 dhcp_on=True \
+                 primary_rack="${RACK_PRIMARY_ID_0}"
 #--------------------------------------------------------------------------------
 # https://maas.io/docs/how-to-use-the-maas-cli
 
